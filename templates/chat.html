@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Chat - Smart AI</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-image: url('https://wallpaperaccess.com/full/728014.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: white;
+      font-family: 'Segoe UI';
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.75);
+      min-height: 100vh;
+      padding-top: 50px;
+      padding-bottom: 30px;
+    }
+
+    .chat-container {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .msg-bubble {
+      padding: 10px 15px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    .user-msg {
+      background-color: #343a40;
+      text-align: right;
+    }
+
+    .bot-msg {
+      background-color: #ff3d00;
+    }
+
+    .form-control {
+      border-radius: 10px;
+    }
+
+    .btn-warning {
+      border-radius: 10px;
+      font-weight: bold;
+    }
+
+    .btn-outline-light {
+      margin-top: 20px;
+    }
+
+    .suggestions {
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .suggestions ul {
+      padding-left: 20px;
+      margin-bottom: 0;
+    }
+
+    .suggestions li {
+      margin-bottom: 6px;
+      list-style-type: "👉 ";
+    }
+
+    @media (max-width: 576px) {
+      .msg-bubble {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <div class="container chat-container">
+      <h2 class="text-center mb-4">🧠 AI Career Assistant</h2>
+
+      <div class="suggestions text-light">
+        <strong>💬 Try asking:</strong>
+        <ul>
+          <li>What career suits my skills?</li>
+          <li>Roadmap to become a full stack developer</li>
+          <li>Best certifications for AI engineer</li>
+          <li>How to get a job in cybersecurity?</li>
+          <li>Courses for data analyst role</li>
+        </ul>
+      </div>
+
+      {% for msg in messages %}
+        <div class="msg-bubble {{ 'user-msg float-end' if msg.type == 'user' else 'bot-msg float-start' }}">
+          {{ msg.text | safe }}
+        </div>
+        <div class="clearfix"></div>
+      {% endfor %}
+
+      <form method="POST" class="mt-4 d-flex">
+        <input type="text" name="message" class="form-control me-2"
+               placeholder="Ask me anything about careers..." required autocomplete="off">
+        <button class="btn btn-warning">Send</button>
+      </form>
+
+      <div class="text-center mt-3">
+        <a href="/logout" class="btn btn-outline-light btn-sm">Logout</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
